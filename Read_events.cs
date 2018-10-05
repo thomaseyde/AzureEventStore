@@ -22,6 +22,20 @@ namespace AzureTableStorageStuff
         }
 
         [Fact]
+        public void Read_backwards_from_end()
+        {
+            var events = _store.ReadBackwards(_stream, uint.MaxValue);
+            Assert.Equal(10, events.Count());
+        }
+
+        [Fact]
+        public void Read_backwards_from_version()
+        {
+            var events = _store.ReadBackwards(_stream, 9);
+            Assert.Equal(9, events.Count());
+        }
+
+        [Fact]
         public void Read_forward_from_start()
         {
             var events = _store.ReadForward(_stream, 1);
