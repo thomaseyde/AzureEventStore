@@ -31,6 +31,22 @@ namespace AzureTableStorageStuff.Library
             }
         }
 
+        public IEnumerable<EventData> ReadBackwards(Stream stream, uint fromVersion)
+        {
+            var fromId = EventId(stream, 1);
+            var toId = EventId(stream, fromVersion);
+
+            var versions = (IEnumerable<string>) _events.Keys
+                .Where(version => string.Compare(fromId, version, StringComparison.Ordinal) <= 0 &&
+                                  string.Compare(version, toId, StringComparison.Ordinal) <= 0)
+                .OrderBy(version => version);
+
+            foreach (var version in versions)
+            {
+                yield return _events[version];
+            }
+        }
+
         public void Write(string eventId, EventData data)
         {
             _events.Add(eventId, data);
