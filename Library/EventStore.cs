@@ -31,5 +31,10 @@ namespace AzureTableStorageStuff.Library
         {
             return _provider.ReadForward(stream, fromVersion);
         }
+
+        public IEnumerable<EventData> ReadBackwards(Stream stream, uint fromVersion)
+        {
+            return _provider.ReadBackwards(stream, fromVersion);
+        }
     }
 }
