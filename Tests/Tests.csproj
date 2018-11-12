@@ -4,9 +4,12 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.2" />
     <PackageReference Include="xunit" Version="2.4.0" />
@@ -17,11 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Aggregates\Aggregates.csproj" />
+    <ProjectReference Include="..\AzureEventStore\AzureEventStore.csproj" />
+    <ProjectReference Include="..\ExampleDomain\ExampleDomain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <HintPath>..\..\..\..\.nuget\packages\windowsazure.storage\8.6.0\lib\netstandard1.3\Microsoft.WindowsAzure.Storage.dll</HintPath>
-    </Reference>
-    <Reference Include="Streamstone">
-      <HintPath>..\..\..\..\.nuget\packages\streamstone\2.2.0\lib\netstandard2.0\Streamstone.dll</HintPath>
     </Reference>
     <Reference Include="xunit.core">
       <HintPath>..\..\..\..\.nuget\packages\xunit.extensibility.core\2.3.1\lib\netstandard1.1\xunit.core.dll</HintPath>

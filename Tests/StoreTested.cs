@@ -1,4 +1,4 @@
-﻿namespace AzureTableStorageStuff
+﻿namespace Tests
 {
     public class StoreTested
     {
