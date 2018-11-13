@@ -2,7 +2,6 @@
 using System.Linq;
 using AzureEventStore;
 using AzureEventStore.Testing;
-using ExampleDomain;
 using ExampleDomain.Persistence;
 using FluentAssertions;
 using Xunit;
@@ -33,7 +32,7 @@ namespace Tests
         {
             var slice = stream.ReadForward(size, EventVersion.First);
 
-	        slice.Events.Length.Should().Be(10);
+	        slice.Events.Should().HaveCount(10);
 	        slice.NextVersion.Should().Be(EventVersion.From(11));
         }
 
@@ -42,7 +41,7 @@ namespace Tests
         {
             var slice = stream.ReadForward(size, EventVersion.From(11));
 
-	        slice.Events.Length.Should().Be(10);
+	        slice.Events.Should().HaveCount(10);
 	        slice.NextVersion.Should().Be(EventVersion.From(21));
         }
 
@@ -71,7 +70,7 @@ namespace Tests
 	            version = slice.NextVersion;
             } while (slice.HasMore());
 
-	        events.Count.Should().Be(100);
+	        events.Should().HaveCount(100);
 	        events.First().Version.Should().Be(1);
 	        events.Last().Version.Should().Be(100);
         }
@@ -95,7 +94,7 @@ namespace Tests
 	            fromVersion = slice.NextVersion;
             } while (slice.HasMore());
 
-	        events.Count.Should().Be(100);
+	        events.Should().HaveCount(100);
 	        events.First().Version.Should().Be(1);
 	        events.Last().Version.Should().Be(100);
         }
@@ -121,7 +120,7 @@ namespace Tests
         public void Read_slice_backwards_from_end()
         {
             var slice = stream.ReadBackward(size, EventVersion.Last);
-	        slice.Events.Length.Should().Be(10);
+	        slice.Events.Should().HaveCount(10);
 	        slice.NextVersion.Should().Be(EventVersion.From(90));
         }
 

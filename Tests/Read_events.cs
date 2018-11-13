@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using AzureEventStore;
 using AzureEventStore.Testing;
-using ExampleDomain;
 using ExampleDomain.Persistence;
 using FluentAssertions;
 using Xunit;
@@ -13,7 +12,7 @@ namespace Tests
 	    readonly Stream stream;
         readonly Size size;
 
-        public Read_events()
+	    public Read_events()
         {
 	        var store = new EventStore(new MemoryProvider());
             stream = store.OpenStream("stream", "id");
@@ -32,14 +31,14 @@ namespace Tests
         public void Read_backwards_from_end()
         {
             var slice = stream.ReadBackward(size, EventVersion.Last);
-	        slice.Events.Length.Should().Be(10);
+	        slice.Events.Should().HaveCount(10);
         }
 
         [Fact]
         public void Read_backwards_from_version()
         {
             var slice = stream.ReadBackward(size, EventVersion.From(9));
-	        slice.Events.Length.Should().Be(9);
+	        slice.Events.Should().HaveCount(9);
         }
 
         [Fact]
@@ -47,15 +46,15 @@ namespace Tests
         {
             var events = stream.ReadForward(size, EventVersion.First);
 
-	        events.Events.Length.Should().Be(10);
+	        events.Events.Should().HaveCount(10);
         }
 
         [Fact]
         public void Read_forward_from_version()
         {
-            var events = stream.ReadForward(size, EventVersion.From(2));
+            var slice = stream.ReadForward(size, EventVersion.From(2));
 
-	        events.Events.Length.Should().Be(9);
+	        slice.Events.Should().HaveCount(9);
         }
     }
 }

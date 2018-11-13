@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureEventStore", "AzureEve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggregates", "Aggregates\Aggregates.csproj", "{B4006787-2592-4610-92AA-2694BB7E6E5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleDomain", "ExampleDomain\ExampleDomain.csproj", "{EFA680AD-2045-416F-9242-25572A92D250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleDomain", "ExampleDomain\ExampleDomain.csproj", "{EFA680AD-2045-416F-9242-25572A92D250}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

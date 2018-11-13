@@ -1,5 +1,4 @@
-﻿using Aggregates;
-using Aggregates.Persistence;
+﻿using Aggregates.Persistence;
 
 namespace ExampleDomain.Cards
 {
