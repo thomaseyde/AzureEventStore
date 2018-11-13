@@ -44,6 +44,21 @@ namespace AzureEventStore.Testing
 			             .ToArray();
 		}
 
+		protected override EventData[] ReadForward(ushort size, ulong fromPosition, ulong toPosition)
+		{
+			return checkpoints.Keys
+			             .Where(position => Between(fromPosition, position, toPosition))
+			             .OrderBy(position => position)
+			             .Take(size)
+			             .Select(position => checkpoints[position])
+			             .ToArray();
+		}
+
+		private static bool Between(ulong start, ulong value, ulong end)
+		{
+			return start <= value && value <= end;
+		}
+
 		private static bool Between(string start, string value, string end)
 		{
 			return string.Compare(start, value, StringComparison.Ordinal) <= 0 &&

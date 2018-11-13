@@ -11,10 +11,11 @@ namespace Tests
     {
 	    readonly Stream stream;
         readonly Size size;
+	    private readonly EventStore store;
 
 	    public Read_events()
         {
-	        var store = new EventStore(new MemoryProvider());
+	        store = new EventStore(new MemoryProvider());
             stream = store.OpenStream("stream", "id");
             var factory = EventDataFactory.Create(new TypeResolver());
 
@@ -56,5 +57,22 @@ namespace Tests
 
 	        slice.Events.Should().HaveCount(9);
         }
+
+	    [Fact]
+	    public void Read_checkpoints_from_start()
+	    {
+		    var checkpoints = store.OpenCheckpoints();
+		    var slice = checkpoints.Read(size, EventPosition.First);
+		    slice.Events.Should().HaveCount(10);
+	    }
+
+	    [Fact]
+	    public void Read_checkpoints_from_position()
+	    {
+		    var checkpoints = store.OpenCheckpoints();
+		    var skip = checkpoints.Read(Size.Of(1), EventPosition.First);
+		    var slice = checkpoints.Read(size, EventPosition.From(skip.NextPosition));
+		    slice.Events.Should().HaveCount(9);
+	    }
     }
 }

@@ -13,5 +13,10 @@
 	    {
 		    return new Stream(bucket, id, provider);
 	    }
+
+	    public CheckpointStream OpenCheckpoints()
+	    {
+		    return new CheckpointStream(provider);
+	    }
     }
 }

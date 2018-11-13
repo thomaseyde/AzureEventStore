@@ -36,5 +36,13 @@
 			var slicedEvents = ReadBackward((ushort) size, fromId, toId);
 			return EventSlice.Previous(slicedEvents);
 		}
+
+		public CheckpointSlice Read(Size size, EventPosition fromPosition)
+		{
+			var slicedEvents = ReadForward((ushort) size, fromPosition, EventPosition.Last);
+			return CheckpointSlice.Next(slicedEvents);
+		}
+
+		protected abstract EventData[] ReadForward(ushort size, ulong fromPosition, ulong toPosition);
 	}
 }
