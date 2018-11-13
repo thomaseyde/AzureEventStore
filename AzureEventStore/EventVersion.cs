@@ -8,7 +8,7 @@ namespace AzureEventStore
     {
         public static readonly EventVersion None = new EventVersion(uint.MinValue);
 
-	    public static readonly EventVersion First = new EventVersion(uint.MinValue);
+	    public static readonly EventVersion First = new EventVersion(1);
 
 	    public static readonly EventVersion Last = new EventVersion(uint.MaxValue);
 

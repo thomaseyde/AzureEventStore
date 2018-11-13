@@ -112,7 +112,7 @@ namespace Tests
         {
             var slice = stream.ReadBackward(size, EventVersion.First);
 
-	        slice.Events.Should().BeEmpty();
+	        slice.Events.Should().HaveCount(1);
 	        slice.NextVersion.Should().Be(EventVersion.None);
         }
 
