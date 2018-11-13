@@ -31,11 +31,6 @@ namespace AzureEventStore
 		    return new EventVersion((uint) version);
 	    }
 
-	    public static EventVersion From(uint version)
-	    {
-		    return new EventVersion(version);
-	    }
-
 	    public override string ToString()
         {
             return value.ToString();
@@ -68,21 +63,6 @@ namespace AzureEventStore
             return (int) value;
         }
 
-	    public EventVersion Modulo(int divisor)
-	    {
-		    return From((uint) (value % divisor));
-	    }
-
-	    public EventVersion Add(int addend)
-	    {
-		    return From((uint) (value + addend));
-	    }
-
-	    public bool GreaterOrEqual(int comparand)
-	    {
-		    return value >= comparand;
-	    }
-
 	    public static implicit operator uint(EventVersion v) => v.value;
 
 	    public static bool operator ==(EventVersion left, EventVersion right)
@@ -93,12 +73,6 @@ namespace AzureEventStore
 	    public static bool operator !=(EventVersion left, EventVersion right)
         {
             return !Equals(left, right);
-        }
-
-	    public string ToString(byte digits)
-        {
-            // ReSharper disable once ImpureMethodCallOnReadonlyValueField
-            return value.ToString($"D{digits}");
         }
 
 	    public int CompareTo(EventVersion other)

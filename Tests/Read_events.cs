@@ -74,5 +74,21 @@ namespace Tests
 		    var slice = checkpoints.Read(size, EventPosition.From(skip.NextPosition));
 		    slice.Events.Should().HaveCount(9);
 	    }
+
+	    [Fact]
+	    public void Read_checkpoints_past_end()
+	    {
+		    var checkpoints = store.OpenCheckpoints();
+		    
+		    var all = checkpoints.Read(size, EventPosition.First);
+		    all.HasMore().Should().BeTrue();
+
+		    var slice = checkpoints.Read(size, EventPosition.From(all.NextPosition));
+		    
+		    slice.NextPosition.Should().Be(slice.NextPosition);
+		    slice.NextPosition.Should().NotBe(EventPosition.None);
+		    slice.NextPosition.Should().NotBe(EventPosition.Last);
+		    slice.HasMore().Should().BeFalse();
+	    }
     }
 }

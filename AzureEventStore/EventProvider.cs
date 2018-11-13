@@ -1,4 +1,6 @@
-﻿namespace AzureEventStore
+﻿using System.Linq;
+
+namespace AzureEventStore
 {
 	public abstract class EventProvider
 	{
@@ -40,7 +42,13 @@
 		public CheckpointSlice Read(Size size, EventPosition fromPosition)
 		{
 			var slicedEvents = ReadForward((ushort) size, fromPosition, EventPosition.Last);
-			return CheckpointSlice.Next(slicedEvents);
+
+			if (slicedEvents.Any())
+			{
+				return CheckpointSlice.Next(slicedEvents);
+			}
+
+			return CheckpointSlice.Next(fromPosition);
 		}
 
 		protected abstract EventData[] ReadForward(ushort size, ulong fromPosition, ulong toPosition);

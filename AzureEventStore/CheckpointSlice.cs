@@ -1,4 +1,6 @@
-﻿namespace AzureEventStore
+﻿using System.Linq;
+
+namespace AzureEventStore
 {
 	public class CheckpointSlice
 	{
@@ -6,11 +8,6 @@
 		{
 			return new CheckpointSlice(events, EventPosition.Next(events));
 		}
-
-		//public static CheckpointSlice Previous(EventData[] events)
-		//{
-		//	return new CheckpointSlice(events, EventVersion.Previous(events));
-		//}
 
 		public EventData[] Events { get; }
 		public EventPosition NextPosition { get; }
@@ -23,7 +20,12 @@
 
 		public bool HasMore()
 		{
-			return NextPosition != EventVersion.None;
+			return Events.Any();
+		}
+
+		public static CheckpointSlice Next(EventPosition fromPosition)
+		{
+			return new CheckpointSlice(new EventData[0], fromPosition);
 		}
 	}
 }

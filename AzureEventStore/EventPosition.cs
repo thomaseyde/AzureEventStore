@@ -19,18 +19,6 @@ namespace AzureEventStore
 			return new EventPosition(next);
 		}
 
-		public static EventPosition Previous(ICollection<EventData> events)
-		{
-			if (!events.Any()) return None;
-			var previous = events.Min(data => data.Version) - 1;
-			return new EventPosition(previous);
-		}
-
-		public static EventPosition From(long version)
-		{
-			return new EventPosition((ulong) version);
-		}
-
 		public static EventPosition From(ulong version)
 		{
 			return new EventPosition(version);
@@ -68,21 +56,6 @@ namespace AzureEventStore
 			return (int) value;
 		}
 
-		public EventPosition Modulo(ulong divisor)
-		{
-			return From((ulong) (value % divisor));
-		}
-
-		public EventPosition Add(ulong addend)
-		{
-			return From((ulong) (value + addend));
-		}
-
-		public bool GreaterOrEqual(ulong comparand)
-		{
-			return value >= comparand;
-		}
-
 		public static implicit operator ulong(EventPosition v) => v.value;
 
 		public static bool operator ==(EventPosition left, EventPosition right)
@@ -93,12 +66,6 @@ namespace AzureEventStore
 		public static bool operator !=(EventPosition left, EventPosition right)
 		{
 			return !Equals(left, right);
-		}
-
-		public string ToString(byte digits)
-		{
-			// ReSharper disable once ImpureMethodCallOnReadonlyValueField
-			return value.ToString($"D{digits}");
 		}
 
 		public int CompareTo(EventPosition other)
